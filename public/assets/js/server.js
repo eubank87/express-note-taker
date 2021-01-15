@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 
 // Sets up the express app
 // ========================================================
@@ -12,7 +13,11 @@ app.use(express.json());
 // Static directory
 app.use(express.static("public"));
 
+const notes = [];
 
+app.get("/notes", (req, res)=>{
+    res.sendFile(path.join(__dirname, "notes.html"))
+})
 
 
 app.listen(PORT, function(){
