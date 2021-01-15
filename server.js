@@ -15,12 +15,12 @@ app.use(express.static("public"));
 
 const notes = [];
 
-app.get("*", (req, res)=>{
+app.get("/", (req, res)=>{
     res.sendFile(path.join(__dirname, "index.html"))
 })
 
 app.get("/notes", (req, res)=>{
-    res.sendFile(path.join(__dirname, "public/notes.html"))
+    res.sendFile(path.join(__dirname, "notes.html"))
 })
 
 
@@ -28,6 +28,13 @@ app.get("/api/notes", (req, res)=>{
     res.json(notes);
 })
 
+app.post("/api/notes", (req, res)=>{
+    const newNote = req.body;
+    notes.push(newNote)
+    console.log(newNote)
+    console.log("Notes array", notes);
+    re.json(newNote);
+})
 
 
 app.listen(PORT, function(){
