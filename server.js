@@ -61,7 +61,31 @@ app.post("/api/notes", (req, res)=>{
     })
 });
 
-
+app.delete("/api/notes/:id", (req, res)=>{
+    const noteId = req.params.id
+    fs.readFile(path.join(__dirname, "db/db.json"), "utf8", (err, data)=>{
+        if(err){
+            throw err
+        } else{
+            console.log("All good")
+        }
+        const newData = JSON.parse(data)
+        for(let i = 0; i<newData.length; i++){
+            if(newData[i].id === noteId){
+                newData.splice(i, 1)
+                
+                const finalData = JSON.stringify(newData)
+                fs.writeFile(path.join(__dirname, "db/db.json"), finalData, (err, data)=>{
+                    if(err){
+                        throw err
+                    } else{
+                        res.send("done")
+                    }
+                })
+            }
+        }
+    })
+});
 
 // listening function
 app.listen(PORT, function(){
